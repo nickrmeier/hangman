@@ -8,6 +8,7 @@ let animals = [
 
 let winningWord="";
 let lettersChosen = [];
+let playerWinArray = [];
 let indexMatch = 0
 let wrongGuesses = 0;
 
@@ -29,34 +30,62 @@ function createButtons(){
 
 
 function guessHandler(letterChoice){
+    let winningWordArray = [];
+    winningWordArray = winningWord.split('');
+    console.log(winningWordArray)
 
     lettersChosen.push(letterChoice)
-
-
+    
     console.log(lettersChosen)
     console.log(winningWord[indexMatch])
     console.log(indexMatch)
     console.log(lettersChosen.length)
     console.log(winningWord.length)
-    console.log(lettersChosen.join(""))
     console.log(wrongGuesses)
+    console.log(playerWinArray)
 
-
-
-    if(lettersChosen[indexMatch] !== winningWord[indexMatch]){
-        lettersChosen.pop();
-        wrongGuesses++;
-        hangmanUpdateImage(wrongGuesses);
-
-    } else if (lettersChosen.join("") === winningWord){
-        alert("you Won!")
-    } else if (lettersChosen[indexMatch] === winningWord[indexMatch]){
-        indexMatch++  
+    if(winningWordArray.includes(lettersChosen[indexMatch])){
+        console.log("this works")
+        playerWinArray.push(lettersChosen[indexMatch])
+        console.log(playerWinArray)
+        indexMatch++
+        winCheck(winningWordArray, playerWinArray, indexMatch);
     } else {
-        alert("error")
-    }  
+        indexMatch++
+        wrongGuesses++
+        alert("THIS might WORKS")
+        hangmanUpdateImage(wrongGuesses)
+    }
+    
+
+    
+
+
+    // if(lettersChosen[indexMatch] !== winningWord[indexMatch]){
+    //     lettersChosen.pop();
+    //     wrongGuesses++;
+    //     hangmanUpdateImage(wrongGuesses);
+
+    // } else if (lettersChosen.join("") === winningWord){
+    //     alert("you Won!")
+    // } else if (lettersChosen[indexMatch] === winningWord[indexMatch]){
+    //     indexMatch++  
+    // } else {
+    //     alert("error")
+    // }  
 
 }
+
+function winCheck(winningWordArray, playerWinArray, indexMatch) {
+    let checker = (arr, target) => target.every(v => arr.includes(v));
+
+    if(checker(winningWordArray, playerWinArray) == true && winningWordArray.length === playerWinArray.length) {
+        alert("OMG YOU WON")
+    }
+
+
+}
+
 
 function hangmanUpdateImage(wrongGuesses){
 
@@ -71,4 +100,3 @@ function hangmanUpdateImage(wrongGuesses){
 
 pickWord();
 createButtons();
-// guessHandler();
