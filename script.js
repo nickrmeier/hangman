@@ -20,6 +20,12 @@ function pickWord() {
     wordBlankFiller(winningWord);
 };
 
+function wordBlankFiller(winningWord){
+    let blankSpaces = winningWord.length;
+    let blank = "-"
+    document.getElementById("word").innerHTML = blank.repeat(blankSpaces);
+}
+
 function createButtons(){
     let dynamicButtons = "abcdefghijklmnopqrstuvwxyz".split("").map(letter => 
         `<button class="btn btn-outline-primary" id='` + letter + `' onClick="guessHandler('` + letter + `')">
@@ -42,6 +48,7 @@ function guessHandler(letterChoice){
         console.log(playerWinArray)
         indexMatch++
         winCheck(winningWordArray, playerWinArray, indexMatch);
+        wordBlankFillerUpdate(winningWord, letterChoice)
     } else {
         indexMatch++
         wrongGuesses++
@@ -54,11 +61,14 @@ function wrongCounter(wrongGuesses){
     document.getElementById("wrong_counter").innerHTML = wrongGuesses + " out of 6 wrong!"
 }
 
-function wordBlankFiller(winningWord){
-    let blankSpaces = winningWord.length;
-    let blank = "-"
-    document.getElementById("word").innerHTML = blank.repeat(blankSpaces);
-    // document.getElementById("test_word").innerHTML = playerWinArray;
+function wordBlankFillerUpdate(winningWord, letterChoice) {
+    console.log(winningWord)
+    console.log(letterChoice)
+
+if (winningWord.includes(letterChoice)){
+    console.log('This letter is here')
+}
+
 }
 
 function winCheck(winningWordArray, playerWinArray) {
@@ -66,7 +76,6 @@ function winCheck(winningWordArray, playerWinArray) {
 
     if(checker(winningWordArray, playerWinArray) == true && winningWordArray.length === playerWinArray.length) {
         win(true);
-        // newGame();
     }
 }
 
@@ -79,9 +88,7 @@ function win(bool) {
 }
 
 function hangmanUpdateImage(wrongGuesses){
-
     document.getElementById("hangman_image").src = "./images/" + wrongGuesses + ".png"
-
     if (wrongGuesses >= 6) {
         document.getElementById("lost").innerHTML = "YOU LOST!";
         document.getElementById("keyboard").innerHTML = ""
