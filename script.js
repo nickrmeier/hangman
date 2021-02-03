@@ -3,7 +3,8 @@ let animals = [
     "cat",
     "dog",
     "duck",
-    "snake"
+    "snake",
+    "longword"
 ]
 
 let winningWord="";
@@ -16,6 +17,7 @@ let wrongGuesses = 0;
 function pickWord() {
     winningWord = animals[Math.floor(Math.random() * animals.length)];
     console.log(winningWord);
+    wordBlankFiller(winningWord);
 };
 
 function createButtons(){
@@ -26,7 +28,6 @@ function createButtons(){
         ).join('');
 
     document.getElementById("keyboard").innerHTML = dynamicButtons
-
 };
 
 
@@ -45,16 +46,35 @@ function guessHandler(letterChoice){
         indexMatch++
         wrongGuesses++
         hangmanUpdateImage(wrongGuesses)
+        wrongCounter(wrongGuesses)
     }
 }
 
+function wrongCounter(wrongGuesses){
+    document.getElementById("wrong_counter").innerHTML = wrongGuesses + " out of 6 wrong!"
+}
 
-function winCheck(winningWordArray, playerWinArray, indexMatch) {
+function wordBlankFiller(winningWord){
+    let blankSpaces = winningWord.length;
+    let blank = "-"
+    document.getElementById("word").innerHTML = blank.repeat(blankSpaces);
+    // document.getElementById("test_word").innerHTML = playerWinArray;
+}
+
+function winCheck(winningWordArray, playerWinArray) {
     let checker = (arr, target) => target.every(v => arr.includes(v));
 
     if(checker(winningWordArray, playerWinArray) == true && winningWordArray.length === playerWinArray.length) {
-        alert("OMG YOU WON")
-        newGame();
+        win(true);
+        // newGame();
+    }
+}
+
+function win(bool) {
+    if (bool){
+        document.getElementById("lost").innerHTML = "you won!"
+    } else {
+        document.getElementById("lost").innerHTML = ""
     }
 }
 
@@ -65,6 +85,8 @@ function hangmanUpdateImage(wrongGuesses){
     if (wrongGuesses >= 6) {
         document.getElementById("lost").innerHTML = "YOU LOST!";
         document.getElementById("keyboard").innerHTML = ""
+    } else {
+        document.getElementById("lost").innerHTML = "";
     }
 }
 
@@ -77,6 +99,10 @@ function newGame(){
     wrongGuesses = 0;
     pickWord();
     hangmanUpdateImage(0);
+    createButtons();
+    wrongCounter(0);
+
+    win(false)
 }
 
 

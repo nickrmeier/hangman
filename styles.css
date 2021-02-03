@@ -2,8 +2,12 @@
     margin-top: 30px;
 }
 
+#word {
+    margin-top: 40px;
+}
+
 #hangman_image {
-    margin-top: 150px;
+    margin-top: 80px;
 }
 
 #reset_button {

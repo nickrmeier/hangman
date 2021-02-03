@@ -13,12 +13,19 @@
 <body>
     <div>
         <h1 id="main_title" class="text-center">Hang Man</h1>
+
+        <h2 id="word" class="text-center"></h2>
+        <h2 id="win"></h2>
+
         <img id="hangman_image" src="./images/0.png" class="rounded mx-auto d-block" />
 
         <div class="text-center">
             <div class="keyboard" id="keyboard"></div>
             <h2 id="lost"></h2>
-            <button id="reset_button" type="button" class="btn btn-primary">New Game</button>
+            
+            <h4 id="wrong_counter">0 out of 6 wrong!</h4>
+
+            <button id="reset_button" type="button" class="btn btn-primary" onclick="newGame()">New Game</button>
         </div>
     </div>
     
